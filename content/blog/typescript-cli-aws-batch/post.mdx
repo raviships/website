@@ -47,7 +47,7 @@ This will generate a `package.json` file with some default values.
 
 After the whole tutorial, our folder structure should look something like this:
 
-![image.png](/blog/typescript-cli-aws-batch/mYDbJgGzk.png)
+![image.png](/blog/typescript-cli-aws-batch/project-folder-structure.png)
 
 ## Setup TypeScript
 
@@ -244,7 +244,7 @@ First, we need to create the ECR repository.
     
 * Create a new private repository named `typescript-cli`.
     
-    ![aws-ecr-create-repo.png](/blog/typescript-cli-aws-batch/Wn9Hilc6J.png)
+    ![aws-ecr-create-repo.png](/blog/typescript-cli-aws-batch/aws-ecr-create-repository.png)
     
 
 Now, we need to [push our local image to the ECR repository](https://docs.aws.amazon.com/AmazonECR/latest/userguide/docker-push-ecr-image.html).
@@ -282,19 +282,19 @@ For AWS Batch to be able to access the ECS related services, we need to create a
 
 First, let's go to the [IAM &gt; Roles](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/roles) console. And click in 'Create role'.
 
-![aws-iam-create-role-1.png](/blog/typescript-cli-aws-batch/BBycKghQ0.png)
+![aws-iam-create-role-1.png](/blog/typescript-cli-aws-batch/aws-iam-create-role.png)
 
 Then, search for the 'Elastic Container Service' and select 'Elastic Container Service Task'.
 
-![aws-iam-create-role-2.png](/blog/typescript-cli-aws-batch/KjyRzTiEz.png)
+![aws-iam-create-role-2.png](/blog/typescript-cli-aws-batch/aws-iam-select-ecs-task.png)
 
 Next, we need to search for 'ecs' and select 'AmazonECSTaskExecutionRolePolicy'. This will give the necessary permissions to access the ECR image we pushed.
 
-![aws-iam-create-role-3.png](/blog/typescript-cli-aws-batch/90kGpRgVM.png)
+![aws-iam-create-role-3.png](/blog/typescript-cli-aws-batch/aws-iam-add-task-execution-policy.png)
 
 Finally, we just choose a name for the role, and click 'Create role'. Let's name it 'ecsTaskExecutionRole'.
 
-![aws-iam-create-role-4.png](/blog/typescript-cli-aws-batch/Rt-rSMFge.png)
+![aws-iam-create-role-4.png](/blog/typescript-cli-aws-batch/aws-iam-name-task-execution-role.png)
 
 ### Create a Compute Environment
 
@@ -304,7 +304,7 @@ For that, we need to go to the [Batch console &gt; Compute Environment](https://
 
 The only thing we need to set here is the \[Compute environment name\]. Let's set it to 'ts-batch'.
 
-![aws-batch-compute-environment.png](/blog/typescript-cli-aws-batch/jtufxD35v.png)
+![aws-batch-compute-environment.png](/blog/typescript-cli-aws-batch/aws-batch-compute-environment.png)
 
 The rest can be kept on the default values.
 
@@ -319,7 +319,7 @@ Go to the job queue tab, and create one.
 
 Just set the \[Job queue name\] as 'ts-batch-queue' and select the compute environment we created.
 
-![aws-batch-job-queue.png](/blog/typescript-cli-aws-batch/WfWCAL344.png)
+![aws-batch-job-queue.png](/blog/typescript-cli-aws-batch/aws-batch-job-queue.png)
 
 ### Create a Job Definition
 
@@ -327,7 +327,7 @@ Finally, we can create our job definition.
 
 Here is how it looks like:
 
-![aws-batch-job-definition.png](/blog/typescript-cli-aws-batch/GW3xQz99E.png)
+![aws-batch-job-definition.png](/blog/typescript-cli-aws-batch/aws-batch-job-definition.png)
 
 ※ If your batch is running in a public subnet, you need to select the 'Assign public IP', otherwise it wont be able to access the internet and will fail trying to pull the ECR image. If it is on a private subnet with a route to a NAT Gateway on a public subnet, then you should uncheck the 'Assign public IP' since it will be able to access the internet through the NAT Gateway's IP.
 
@@ -337,23 +337,23 @@ Now we can run our job.
 
 For that, in the Job Definition tab, select the job definition we've created and click on 'Submit new job'
 
-![aws-batch-list-job-definitions.png](/blog/typescript-cli-aws-batch/zSOoIu9Ux.png)
+![aws-batch-list-job-definitions.png](/blog/typescript-cli-aws-batch/aws-batch-job-definitions.png)
 
 Now we just need to choose a name for the job (this can be anything you like) and select the queue we've created. If we want, we can also change the default command and other values we have set in the job definition.
 
-![aws-batch-run-job.png](/blog/typescript-cli-aws-batch/dBLu3bmWR.png)
+![aws-batch-run-job.png](/blog/typescript-cli-aws-batch/aws-batch-submit-job.png)
 
 After that, we are able to check the running jobs on the 'Jobs' tab. (Click the refresh button if nothing shows up)
 
-![aws-batch-list-jobs.png](/blog/typescript-cli-aws-batch/wRLc_2K-B.png)
+![aws-batch-list-jobs.png](/blog/typescript-cli-aws-batch/aws-batch-jobs.png)
 
 If we click on a job, we can see its details.
 
-![aws-batch-job-status.png](/blog/typescript-cli-aws-batch/g-IbClRJC.png)
+![aws-batch-job-status.png](/blog/typescript-cli-aws-batch/aws-batch-job-details.png)
 
 And also check the logs.
 
-![aws-batch-logs.png](/blog/typescript-cli-aws-batch/9iybllqCq.png)
+![aws-batch-logs.png](/blog/typescript-cli-aws-batch/aws-batch-cloudwatch-logs.png)
 
 ## Conclusion
 
