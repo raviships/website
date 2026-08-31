@@ -91,6 +91,10 @@
     @apply text-inherit no-underline;
   }
 
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+
   ::selection {
     @apply bg-foreground text-background;
   }
