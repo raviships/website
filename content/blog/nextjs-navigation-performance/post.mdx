@@ -1,0 +1,113 @@
+Some time ago I was building a new app with the Next.js App Router, but the app navigation felt quite slower than I was used to with the Pages Router, so I decided to try to understand better the App Router features and how they affect the navigation speed.
+
+## Demo
+
+I was making some example pages for testing and decided to make a full demo app to showcase each feature and how they affect navigation performance.
+
+[Demo App](https://nextperformance.vercel.app)
+
+[![](/blog/nextjs-navigation-performance/nextjs-performance-demo.png)](https://nextperformance.vercel.app)
+
+## App Router vs Pages Router
+
+When you compare the performance of the Pages Router with the App Router, you will notice that by default the Pages Router navigation is faster, while the App Router initial page load is faster (although it is hard to notice the initial page load speed difference without some tool to measure). That happens mainly because of 2 things. With the Pages Router, the necessary JavaScript to navigate to another page is already downloaded to the browser on the page's initial load. With the App Router, the javascript downloaded to the browser is usually smaller and the dynamic content is streamed through the same initial page request (while you would have 2 separate requests for the Pages Router).
+
+## Displaying Dynamic Content
+
+Initially I thought that I would get a fast navigation just by wrapping the dynamic content with `Suspense` with a fallback for a loading state. But as you can see from [the example](https://nextperformance.vercel.app/app-router/suspense), that doesn't happen and the navigation still feels kind of slow.
+
+```tsx title="page.tsx"
+export default function Page(props: { params: Promise<{ id: string }> }) {
+  return (
+    <div>
+      Static Title
+      <Suspense fallback={<Spinner />}>
+        <DynamicComponent {...props} />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+If we add a `loading.tsx` to this route segment, we finally achieve a fast navigation. However, this introduces a new issue with the loading cascade: first, the loading from `loading.tsx` is displayed, and then the loading from the `Suspense` fallback gets displayed.
+
+We can also make the navigation faster by using the `edge` runtime. All we need to do is add `export const runtime = 'edge';` in our page code and the page load should be faster. That said, the `edge` runtime does not support all the node.js features and some libraries might not work as expected.
+
+## Caching
+
+#### Client Side
+
+By enabling the client side router cache, we can get a fast navigation on the second time the user visits a certain page. This was the default behavior on Next.js 14, but it changed with Next.js 15. Now if we want to enable this behaviour we need to add the following in the `next.config.ts` file:
+
+```typescript title="next.config.ts"
+const nextConfig: NextConfig = {
+  experimental: {
+    staleTimes: {
+      dynamic: 30,
+      static: 180,
+    },
+  },
+};
+```
+
+This will make Next.js cache dynamic visited pages on the client side for 30 seconds. That said, the cache is only for that specific user and it goes away when you reload the page. You can also clear the client side cache programmatically by calling `router.refresh()`.
+
+#### Server Side
+
+We can also cache the dynamic content on the server side. This won't actually affect the app's navigation speed when compared with wrapping it with `Suspense`, but it is faster because there will be no loading state.
+
+On the demo I used `unstable_cache()`, but you can also use the newer experimental `use cache` directive, which is probably what people will be using in production once it becomes stable.
+
+```typescript
+const getCachedDynamicData = unstable_cache(getDynamicData);
+```
+
+## Partial Prerendering (PPR)
+
+Enabling PPR on our app makes it possible to have static content and dynamic content on the same page. Where the pre-rendered static shell is shown instantly while the dynamic content wrapped with `Suspense` loads asynchronously.
+
+For now we need to be on the latest canary version of Next.js to enable PPR, but hopefully soon it will come to the stable release. When that happens we might be able to build Next.js apps without thinking too much about navigation performance, as wrapping the dynamic part with `Suspense` will be enough for fast navigation.
+
+```typescript title="next.config.ts"
+const nextConfig: NextConfig = {
+  experimental: {
+    ppr: true,
+  },
+};
+```
+
+## Prefetching
+
+By default, Next.js already prefetches static content of links that are visible in the screen. If we want to go one step further, we can set `prefetch={true}` in our `Link` components. This will make Next.js prefetch the whole page, including the dynamic parts, making navigation instant and without loading even for dynamic pages.
+
+```tsx
+<Link href={link} prefetch>Link</Link>
+```
+
+Of course, this will increase the number of unnecessary requests, which might increase the bandwidth usage on the hosting platform and also cause some unnecessary load on the server.
+
+The server-side load can be avoided if the content can be cached reducing the need for server calls to databases or external services.
+
+## Other Tricks
+
+In [this demo](https://nextperformance.vercel.app/app-router/almighty) you can see how fast you can make your app.
+
+In addition to server-side caching and prefetching, this demo also uses two other tricks to make the navigation even faster. The first one is prefetching target page's images on link hover. The other is to navigate `onMouseDown` (as soon as you click instead of waiting for release).
+
+These tricks were taken from the [NextFaster](https://github.com/ethanniser/NextFaster) project. The main code you will want to check is the `prefetch-images` api route and the custom `link.tsx` component.
+
+They also have a cost breakdown in the README file of this experimental project, which you might want to check.
+
+## Conclusion
+
+Right now we still have to do a little bit of work to make our Next.js app navigation fast with the App Router. Hopefully we won't need to think too much about it after PPR becomes stable. That said, the App Router offers many nice features like the ability to directly call backend code from server components, server actions, caching, layouts, and more. So personally I will be using the App Router for my next projects.
+
+## Thanks for reading!
+
+👋 Here are my links!
+
+* [YouTube](https://youtube.com/@perfectbase)
+    
+* [X](https://x.com/RaviCoding)
+    
+* [Bluesky](https://bsky.app/profile/ravicoding.bsky.social)

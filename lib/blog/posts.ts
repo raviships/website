@@ -2,67 +2,79 @@ import type { BlogPost, LocalPost } from './types';
 
 export const posts: readonly BlogPost[] = [
   {
-    kind: 'external',
-    title: '10 Ways to Make Next.js Navigation Feel Instant',
+    kind: 'local',
+    title: 'Building a Super Fast Next.js App with the App Router',
     description:
-      'Loading states, prefetching, caching, and partial prerendering.',
-    publishedAt: '2026-08-18',
-    readingTime: '9 min',
+      'Optimize your Next.js app navigation with the App Router using caching, prefetching, and Partial Prerendering for enhanced speed and performance',
+    publishedAt: '2024-12-20',
+    readingTime: '5 min',
     topic: 'Next.js',
     slug: 'nextjs-navigation-performance',
-    href: 'https://blog.perfectbase.dev/nextjs-navigation-performance',
+    load: () => import('@/content/blog/nextjs-navigation-performance/post.mdx'),
   },
   {
-    kind: 'external',
-    title: 'Building an AI Script for Realistic Mock Data',
-    description: 'Generate typed seed data and match it with real images.',
-    publishedAt: '2026-07-29',
-    readingTime: '7 min',
-    topic: 'AI',
-    slug: 'building-an-ai-script-to-generate-mock-data-with-realistic-images',
-    href: 'https://blog.perfectbase.dev/building-an-ai-script-to-generate-mock-data-with-realistic-images',
-  },
-  {
-    kind: 'external',
-    title: 'EdgeStore: From Idea to Validation',
-    description: 'How customer calls and small prototypes shaped EdgeStore.',
-    publishedAt: '2026-06-12',
-    readingTime: '6 min',
-    topic: 'Building',
-    slug: 'edge-store-idea-validation',
-    href: 'https://blog.perfectbase.dev/edge-store-idea-validation',
-  },
-  {
-    kind: 'external',
-    title: 'A TypeScript CLI for AWS Batch',
+    kind: 'local',
+    title: 'Building an AI Script to Generate Mock Data with Realistic Images',
     description:
-      'Run and inspect long AWS Batch jobs from a TypeScript command line.',
-    publishedAt: '2026-05-08',
+      'Automate mock data creation with AI scripts using OpenAI and DALL-E for seamless database integration and realistic image generation',
+    publishedAt: '2024-11-23',
+    readingTime: '8 min',
+    topic: 'OpenAI',
+    slug: 'building-an-ai-script-to-generate-mock-data-with-realistic-images',
+    load: () =>
+      import(
+        '@/content/blog/building-an-ai-script-to-generate-mock-data-with-realistic-images/post.mdx'
+      ),
+  },
+  {
+    kind: 'local',
+    title:
+      'Building a SaaS for storing and handling images in your app. Is it a good idea?',
+    description:
+      'Building side projects can be a daunting task, especially when you’re short on time and resources. Luckily, there are some awesome tools out there to help us out - Vercel for hosting and PlanetScale for database, for example. I love to leverage these...',
+    publishedAt: '2022-12-01',
+    updatedAt: '2023-10-05',
+    readingTime: '4 min',
+    topic: 'SaaS',
+    slug: 'edge-store-idea-validation',
+    load: () => import('@/content/blog/edge-store-idea-validation/post.mdx'),
+  },
+  {
+    kind: 'local',
+    title: 'Creating a dockerized TypeScript CLI for running batch jobs on AWS',
+    description:
+      'Learn how to create a TypeScript cli with Commander, use Docker to containerize it and run it as a batch job on AWS with Fargate.',
+    publishedAt: '2022-07-18',
+    updatedAt: '2023-10-05',
     readingTime: '8 min',
     topic: 'TypeScript',
     slug: 'typescript-cli-aws-batch',
-    href: 'https://blog.perfectbase.dev/typescript-cli-aws-batch',
+    load: () => import('@/content/blog/typescript-cli-aws-batch/post.mdx'),
   },
   {
-    kind: 'external',
-    title: 'A Better Dialog and Snackbar Pattern in React',
-    description: 'Coordinate dialogs and snackbars without global UI state.',
-    publishedAt: '2026-04-21',
+    kind: 'local',
+    title:
+      'Create an easily callable Modal Dialog or Snackbar Provider in React with Promise and Context',
+    description:
+      'Use Context and Provider to create an easily callable Dialog and Snackbar. It will help you keep your code clean an easy to read. GitHub sample code shared.',
+    publishedAt: '2022-07-01',
     readingTime: '5 min',
     topic: 'React',
     slug: 'react-dialog-snackbar',
-    href: 'https://blog.perfectbase.dev/react-dialog-snackbar',
+    load: () => import('@/content/blog/react-dialog-snackbar/post.mdx'),
   },
   {
-    kind: 'external',
-    title: 'Serverless GraphQL with Node.js',
+    kind: 'local',
+    title:
+      'Deploying a GraphQL API to Lambda with Serverless Framework, Apollo and TypeScript',
     description:
-      'Cold starts and deployment size in a small serverless GraphQL API.',
-    publishedAt: '2026-03-17',
-    readingTime: '10 min',
-    topic: 'Backend',
+      'Develop a GraphQL API with TypeScript, with a fast hot reload and that is easily deployable to AWS Lambda.',
+    publishedAt: '2022-06-28',
+    updatedAt: '2023-10-05',
+    readingTime: '9 min',
+    topic: 'GraphQL',
     slug: 'nodejs-serverless-graphql',
-    href: 'https://blog.perfectbase.dev/nodejs-serverless-graphql',
+    load: () => import('@/content/blog/nodejs-serverless-graphql/post.mdx'),
   },
 ];
 

@@ -6,7 +6,7 @@ function Header({ activeView }: { activeView: View }) {
   return (
     <header className="mx-auto flex min-h-16.5 w-[min(1040px,calc(100%-40px))] items-center justify-between border-b-2 border-border max-sm:w-[min(calc(100%-32px),560px)]">
       <Link
-        className="bg-accent px-2 py-1.25 text-[13px] font-bold tracking-[-0.015em] text-[#111] focus-visible:outline-2 focus-visible:outline-offset-3"
+        className="bg-primary px-2 py-1.25 text-[13px] font-bold tracking-[-0.015em] text-primary-foreground focus-visible:outline-2 focus-visible:outline-offset-3"
         href="/links"
       >
         Ravi
@@ -14,14 +14,14 @@ function Header({ activeView }: { activeView: View }) {
       <nav className="flex gap-5" aria-label="Main navigation">
         <Link
           aria-current={activeView === 'links' ? 'page' : undefined}
-          className="text-[13px] text-muted hover:text-foreground aria-[current=page]:text-foreground"
+          className="text-[13px] text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground"
           href="/links"
         >
           Links
         </Link>
         <Link
           aria-current={activeView === 'blog' ? 'page' : undefined}
-          className="text-[13px] text-muted hover:text-foreground aria-[current=page]:text-foreground"
+          className="text-[13px] text-muted-foreground hover:text-foreground aria-[current=page]:text-foreground"
           href="/blog"
         >
           Blog
@@ -33,7 +33,7 @@ function Header({ activeView }: { activeView: View }) {
 
 function Footer() {
   return (
-    <footer className="mx-auto flex min-h-25 w-[min(1040px,calc(100%-40px))] items-center justify-between text-[11px] text-muted max-sm:w-[min(calc(100%-32px),560px)] max-sm:flex-col max-sm:items-start max-sm:justify-center max-sm:gap-2">
+    <footer className="mx-auto flex min-h-25 w-[min(1040px,calc(100%-40px))] items-center justify-between text-[11px] text-muted-foreground max-sm:w-[min(calc(100%-32px),560px)] max-sm:flex-col max-sm:items-start max-sm:justify-center max-sm:gap-2">
       <span>Ravi Ships</span>
       <a
         className="text-foreground focus-visible:outline-2 focus-visible:outline-offset-3"

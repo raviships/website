@@ -1,0 +1,124 @@
+Building side projects can be a daunting task, especially when you’re short on time and resources. Luckily, there are some awesome tools out there to help us out - Vercel for hosting and PlanetScale for database, for example. I love to leverage these services for my projects, but there is one thing that most of my projects require, and it’s always a pain to set up: handling images. I saw this as an opportunity to build it myself, and here I'm going to share the idea and what I'm doing to validate it. I would love to have your opinion.
+
+## Current solution
+
+Let's start with the basics. To use my current process, I need to ① have an AWS account. This requires a credit card, which can be a pain for some users. Then, ② I need to set up a private S3 bucket and ③ link it to a CloudFront distribution, along with setting up all the necessary permissions. Finally, ④ I use presigned URLs generated from my API with the logic of who has access to what.
+
+All in all, this current process works for me, but I'm always on the lookout for an easier, more efficient way of doing things. So I'm wondering - how are other people handling it? Are there any alternative methods out there that I might have missed? If anyone has any ideas or suggestions, I'd love to hear them in the comments section below.
+
+Thanks in advance for any input you might have!
+
+## The idea
+
+Here's the idea I have. I've been calling it "[Edge Store](https://edge-store.com/)".
+
+With Edge Store, you would be able to:
+
+* create a free account and get enough storage for at least 2 or 3 small projects.
+    
+* use the SDK to abstract the logic for handling image access and uploads.
+    
+* configure a JWT-based access control.
+    
+* enjoy the great performance on accessing the image from anywhere in the world by leveraging the AWS edge infrastructure.
+    
+
+You wouldn't need to worry about scalability and capacity in the paid plan, as Edge Store would use a pay-as-you-grow model. Additionally, here are some other features that I believe would be nice to have:
+
+* Use the service web app to batch upload images
+    
+* Batch resize images
+    
+* Change extensions
+    
+* Automatically upload a small version of the image
+    
+
+I'd love to hear your thoughts on this idea so let me know what you think.
+
+## SDK Example
+
+#### Client
+
+To set up the client SDK, you would use your service public key, and optionally you could pass the JWT cookie name if you wish to control who can access and upload each image.
+
+```typescript
+import { EdgeStore } from "@edge-store/client";
+
+const edgeStore = new EdgeStore({
+  publicKey: "your-public-key",
+  jwtCookie: "your-jwt-cookie-name",
+});
+```
+
+The following code is to upload an image. Under the hood, it would check the JWT with your configuration, generate the presigned URL, and then upload the image.
+
+```typescript
+await edgeStore.uploadImage({
+  file: file,
+  name: "image.jpg",
+  // Optionally you could resize your images on the fly.
+  width: 300,
+  height: 300,
+});
+```
+
+And you can also use the SDK to get the image URL:
+
+```typescript
+const src = await edgeStore.getImageSrc({
+  name: "image.jpg",
+  // Optional: images can be resized on the edge
+  width: 100,
+  height: 100,
+});
+```
+
+#### Server
+
+There is also a server-side SDK, that you can use in your backend to create your own custom logic for access control, instead of using the service's JWT access control.
+
+```typescript
+import { EdgeStore } from "@edge-store/server";
+
+const edgeStore = new EdgeStore({
+  accessKey: "your-access-key",
+  secretKey: "your-secret-key",
+});
+
+const signedUrl = await edgeStore.getSignedUrl({
+  name: "image.jpg",
+});
+```
+
+#### React component
+
+I also want to build a react component to easily create customizable drag and drop image inputs in your react app. (And in the future, for other frameworks as well)
+
+```tsx
+import { ImageInput } from "@edge-store/react";
+
+const App = () => {
+  return <ImageInput />;
+}
+```
+
+## Would you use it? Would you pay for it?
+
+When it comes to services, it's important to ensure that they are up to the mark and provide value to the user. That's why I want to know your opinion on this particular service. What do you think of it? Is it worth it to join the waiting list on the [landing page](https://edge-store.com/) or comment on this post?
+
+## Building in public
+
+Welcome to my journey of building my first startup! I’m so excited to be starting on this journey and I hope to share the whole process with you through my [YouTube channel](https://youtube.com/@perfectbase). I want to detail the process as best as I can so that it can serve as a reference for other aspiring entrepreneurs looking to build their startups.
+
+I’m sure this process is going to be a rollercoaster filled with highs and lows, and I’m sure it’s going to be one of the most challenging experiences I’ve ever faced. But I’m ready for the journey and I’m sure it’s going to be a rewarding experience.
+
+Here is the first video of the journey: [https://youtu.be/7oZw4gZjYiw](https://youtu.be/7oZw4gZjYiw)
+
+## Thanks for reading!
+
+👋 Here are my links!
+
+* [YouTube](https://www.youtube.com/@perfectbase)
+    
+* [Twitter](https://twitter.com/RaviCoding)

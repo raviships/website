@@ -93,14 +93,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
       <article className="mx-auto max-w-180 py-10 max-sm:py-8">
         <Link
-          className="mb-12 inline-flex items-center gap-2 text-[13px] text-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-3 max-sm:mb-10"
+          className="mb-12 inline-flex items-center gap-2 text-[13px] text-muted-foreground hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-3 max-sm:mb-10"
           href="/blog"
         >
           <ArrowLeft aria-hidden="true" size={15} />
           Blog
         </Link>
         <header className="border-b border-border pb-8">
-          <div className="mb-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] font-medium text-muted uppercase">
+          <div className="mb-4 flex flex-wrap gap-x-3 gap-y-1 font-mono text-[11px] font-medium text-muted-foreground uppercase">
             <time dateTime={post.publishedAt}>
               {formatPostDate(post.publishedAt)}
             </time>
@@ -110,11 +110,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <h1 className="max-w-160 text-[clamp(34px,6vw,58px)] leading-[1.02] font-bold tracking-[-0.05em]">
             {post.title}
           </h1>
-          <p className="mt-5 max-w-150 text-[16px] leading-7 text-muted">
+          <p className="mt-5 max-w-150 text-[16px] leading-7 text-muted-foreground">
             {post.description}
           </p>
         </header>
-        <div className="pt-5">
+        <div className="typeset typeset-blog pt-5">
           <Content />
         </div>
       </article>
