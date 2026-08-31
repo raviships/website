@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <title>Ravi Ships</title>
-  <rect width="32" height="32" fill="#b9d92d" />
+  <rect width="32" height="32" fill="#5b21b6" />
   <text
     x="16"
     y="23"
-    fill="#0e0f0d"
+    fill="#ffffff"
     font-family="Arial, sans-serif"
     font-size="21"
     font-weight="700"
