@@ -22,7 +22,7 @@ function DefaultSocialImage({ publishedAt, title, topic }: SocialImageProps) {
         flexDirection: 'column',
         height: '100%',
         justifyContent: 'space-between',
-        padding: '64px 72px',
+        padding: '72px 80px 66px',
         width: '100%',
       }}
     >
@@ -30,53 +30,46 @@ function DefaultSocialImage({ publishedAt, title, topic }: SocialImageProps) {
         style={{
           alignItems: 'center',
           display: 'flex',
-          fontSize: 26,
-          fontWeight: 700,
-          gap: 18,
+          fontSize: 24,
+          fontWeight: 500,
+          justifyContent: 'space-between',
         }}
       >
-        <span
-          style={{
-            background: '#b9d92d',
-            color: '#111',
-            display: 'flex',
-            padding: '8px 14px',
-          }}
-        >
-          Ravi Ships
-        </span>
-        <span style={{ color: '#92968b', display: 'flex' }}>Blog</span>
+        <span style={{ display: 'flex' }}>Ravi</span>
+        <span style={{ color: '#92968b', display: 'flex' }}>BLOG</span>
       </div>
       <div
         style={{
           display: 'flex',
-          flexDirection: 'column',
-          gap: 28,
+          maxWidth: '92%',
         }}
       >
         <div
           style={{
             display: 'flex',
-            fontSize: 68,
-            fontWeight: 700,
+            fontSize: title.length > 70 ? 60 : 70,
+            fontWeight: 500,
             letterSpacing: '-0.045em',
             lineHeight: 1.02,
           }}
         >
           {title}
         </div>
-        <div
-          style={{
-            color: '#92968b',
-            display: 'flex',
-            fontSize: 22,
-            gap: 22,
-            textTransform: 'uppercase',
-          }}
-        >
-          <span>{topic}</span>
-          <span>{formatPostDate(publishedAt)}</span>
-        </div>
+      </div>
+      <div
+        style={{
+          borderTop: '1px solid #3a3c34',
+          color: '#92968b',
+          display: 'flex',
+          fontSize: 20,
+          justifyContent: 'space-between',
+          letterSpacing: '0.04em',
+          paddingTop: 28,
+          textTransform: 'uppercase',
+        }}
+      >
+        <span>{topic}</span>
+        <span>{formatPostDate(publishedAt)}</span>
       </div>
     </div>
   );
