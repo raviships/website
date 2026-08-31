@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   },
   description: 'Links and notes on software by Ravi.',
   authors: [{ name: 'Ravi Ships', url: 'https://raviships.com' }],
+  alternates: {
+    types: {
+      'application/rss+xml': '/rss.xml',
+    },
+  },
   openGraph: {
     title: 'Ravi Ships',
     description: 'Links and notes on software by Ravi.',

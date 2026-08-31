@@ -26,6 +26,12 @@ const nextConfig: NextConfig = {
         destination: 'https://raviships.com/blog',
         permanent: true,
       },
+      {
+        source: '/rss.xml',
+        has: [legacyBlogHost],
+        destination: 'https://raviships.com/rss.xml',
+        permanent: true,
+      },
       ...legacyBlogSlugs.map((slug) => ({
         source: `/${slug}`,
         has: [legacyBlogHost],
