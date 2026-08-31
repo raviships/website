@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 type View = 'links' | 'blog';
 
-function Header({ activeView }: { activeView: View }) {
+function Header({ activeView }: { activeView?: View }) {
   return (
     <header className="mx-auto flex min-h-16.5 w-[min(1040px,calc(100%-40px))] items-center justify-between border-b-2 border-border max-sm:w-[min(calc(100%-32px),560px)]">
       <Link
@@ -49,7 +49,7 @@ export function SiteShell({
   activeView,
   children,
 }: {
-  activeView: View;
+  activeView?: View;
   children: React.ReactNode;
 }) {
   return (
