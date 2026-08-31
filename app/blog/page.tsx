@@ -16,7 +16,7 @@ export default function BlogPage() {
   return (
     <SiteShell activeView="blog">
       <div className="py-8.5 pb-5.5 max-sm:pt-8 max-sm:pb-5">
-        <h1 className="text-[11px] font-semibold tracking-[0.1em] text-muted uppercase">
+        <h1 className="text-[11px] font-semibold tracking-widest text-muted uppercase">
           Blog
         </h1>
       </div>

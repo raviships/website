@@ -4,7 +4,7 @@ type View = 'links' | 'blog';
 
 function Header({ activeView }: { activeView: View }) {
   return (
-    <header className="mx-auto flex min-h-16.5 w-[min(1040px,calc(100%_-_40px))] items-center justify-between border-b-2 border-border max-sm:w-[min(calc(100%_-_32px),560px)]">
+    <header className="mx-auto flex min-h-16.5 w-[min(1040px,calc(100%-40px))] items-center justify-between border-b-2 border-border max-sm:w-[min(calc(100%-32px),560px)]">
       <Link
         className="bg-accent px-2 py-1.25 text-[13px] font-bold tracking-[-0.015em] text-[#111] focus-visible:outline-2 focus-visible:outline-offset-3"
         href="/links"
@@ -33,7 +33,7 @@ function Header({ activeView }: { activeView: View }) {
 
 function Footer() {
   return (
-    <footer className="mx-auto flex min-h-25 w-[min(1040px,calc(100%_-_40px))] items-center justify-between text-[11px] text-muted max-sm:w-[min(calc(100%_-_32px),560px)] max-sm:flex-col max-sm:items-start max-sm:justify-center max-sm:gap-2">
+    <footer className="mx-auto flex min-h-25 w-[min(1040px,calc(100%-40px))] items-center justify-between text-[11px] text-muted max-sm:w-[min(calc(100%-32px),560px)] max-sm:flex-col max-sm:items-start max-sm:justify-center max-sm:gap-2">
       <span>Ravi Ships</span>
       <a
         className="text-foreground focus-visible:outline-2 focus-visible:outline-offset-3"
@@ -55,7 +55,7 @@ export function SiteShell({
   return (
     <div className="min-h-svh bg-background text-foreground">
       <Header activeView={activeView} />
-      <main className="mx-auto min-h-[calc(100svh_-_166px)] w-[min(1040px,calc(100%_-_40px))] max-sm:w-[min(calc(100%_-_32px),560px)]">
+      <main className="mx-auto min-h-[calc(100svh-166px)] w-[min(1040px,calc(100%-40px))] max-sm:w-[min(calc(100%-32px),560px)]">
         {children}
       </main>
       <Footer />
