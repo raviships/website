@@ -1,27 +1,25 @@
-# Ravi Ships website
+# Website
 
-The source for `raviships.com/links` and `raviships.com/blog`.
+My personal website with my links, blog posts and whatever else I want to add in the future.
 
 ## Local development
 
-Use Node.js 24 and Bun 1.4 or newer.
+Setup:
 
 ```bash
 bun install
 bun dev
 ```
 
-This is a standard Next.js App Router project using TypeScript, Tailwind CSS,
-Biome, Bun, and self-hosted Geist fonts through `next/font`.
-
-Before committing changes:
+Checks:
 
 ```bash
 bun run check
 bun run build
 ```
 
-The public routes are `/links` and `/blog`. The root route permanently redirects
-to `/links` until the site has a dedicated homepage.
+## Blog posts
 
-The links and article metadata live in `lib/site-data.ts`. Blog cards still point to the existing Perfect Base articles until their content moves into this project.
+Add the MDX body at `content/blog/<slug>/post.mdx`, start headings at `##`,
+and register it in `lib/blog/posts.ts`. Use `loadSocialImage` with inline styles
+for a custom social image.

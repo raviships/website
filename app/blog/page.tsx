@@ -1,7 +1,9 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { SiteShell } from '@/components/site-shell';
-import { posts } from '@/lib/site-data';
+import { formatPostDate } from '@/lib/blog/format-date';
+import { posts } from '@/lib/blog/posts';
 import { createPageMetadata } from '@/lib/site-metadata';
 
 const description = 'Notes on software and the projects Ravi works on.';
@@ -21,32 +23,37 @@ export default function BlogPage() {
         </h1>
       </div>
       <section className="border-b-2 border-border" aria-label="Blog posts">
-        {posts.map((post) => (
-          <a
-            className="grid grid-cols-[100px_minmax(260px,1fr)_minmax(180px,0.7fr)_18px] items-start gap-6 border-t-2 border-border py-4.75 hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-3 max-md:grid-cols-[1fr_auto] max-md:gap-x-4 max-md:gap-y-2 max-md:py-5"
-            href={`https://blog.perfectbase.dev/${post.slug}`}
-            key={post.slug}
-            rel="noreferrer"
-            target="_blank"
-          >
-            <div className="flex flex-col gap-1.25 font-mono text-[11px] leading-[1.4] font-medium text-muted uppercase max-md:col-span-full max-md:flex-row max-md:flex-wrap">
-              <span>{post.date}</span>
-              <span>{post.readTime}</span>
-              <span>{post.tag}</span>
-            </div>
-            <h2 className="text-[clamp(20px,2.4vw,27px)] leading-[1.15] font-bold tracking-[-0.035em] max-md:col-start-1">
-              {post.title}
-            </h2>
-            <p className="mt-px text-[13px] leading-[1.65] text-muted max-md:col-span-full">
-              {post.excerpt}
-            </p>
-            <ArrowUpRight
-              aria-hidden="true"
-              className="text-muted max-md:col-start-2 max-md:row-start-2"
-              size={17}
-            />
-          </a>
-        ))}
+        {posts.map((post) => {
+          const isExternal = post.kind === 'external';
+          const Icon = isExternal ? ArrowUpRight : ArrowRight;
+
+          return (
+            <Link
+              className="grid grid-cols-[100px_minmax(260px,1fr)_minmax(180px,0.7fr)_18px] items-start gap-6 border-t-2 border-border py-4.75 hover:bg-surface focus-visible:outline-2 focus-visible:outline-offset-3 max-md:grid-cols-[1fr_auto] max-md:gap-x-4 max-md:gap-y-2 max-md:py-5"
+              href={isExternal ? post.href : `/blog/${post.slug}`}
+              key={post.slug}
+              rel={isExternal ? 'noreferrer' : undefined}
+              target={isExternal ? '_blank' : undefined}
+            >
+              <div className="flex flex-col gap-1.25 font-mono text-[11px] leading-[1.4] font-medium text-muted uppercase max-md:col-span-full max-md:flex-row max-md:flex-wrap">
+                <span>{formatPostDate(post.publishedAt)}</span>
+                <span>{post.readingTime}</span>
+                <span>{post.topic}</span>
+              </div>
+              <h2 className="text-[clamp(20px,2.4vw,27px)] leading-[1.15] font-bold tracking-[-0.035em] max-md:col-start-1">
+                {post.title}
+              </h2>
+              <p className="mt-px text-[13px] leading-[1.65] text-muted max-md:col-span-full">
+                {post.description}
+              </p>
+              <Icon
+                aria-hidden="true"
+                className="text-muted max-md:col-start-2 max-md:row-start-2"
+                size={17}
+              />
+            </Link>
+          );
+        })}
       </section>
     </SiteShell>
   );
