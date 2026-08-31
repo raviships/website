@@ -1,5 +1,5 @@
-import { SitePage } from '@/components/site-page';
+import { permanentRedirect } from 'next/navigation';
 
 export default function HomePage() {
-  return <SitePage view="links" />;
+  permanentRedirect('/links');
 }

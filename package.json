@@ -3,14 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=22.13.0"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "check": "biome check .",
+    "check": "biome check . && tsc --noEmit --incremental false",
     "lint": "biome lint .",
+    "typecheck": "tsc --noEmit --incremental false",
     "format": "biome format --write ."
   },
   "dependencies": {
